@@ -6,7 +6,7 @@ import SignIn from './Components/pages/SignIn/SignIn';
 import SinUp from './Components/pages/SignUp/SignUp';
 import About from './Components/pages/About/About';
 import logo from './logo.svg';
-
+import Profile from './Components/pages/Profile/Profile';
 function App() {
   return (
     <div>
@@ -16,7 +16,7 @@ function App() {
     <Route path = "/SignIn" element = {<SignIn/>} />
     <Route path = "/SinUp" element = {<SinUp/>} />
     <Route path = "/about" element = {<About/>} />
-    
+    <Route path = "/Profile" element = {<Profile/>} />
     </Routes>
     </BrowserRouter>
     </div>
