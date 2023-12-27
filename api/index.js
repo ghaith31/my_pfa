@@ -5,7 +5,7 @@ import dotenv from 'dotenv'
 dotenv.config();
 
 mongoose
-  .connect("mongodb+srv://libery:libery@libery.rh2fcjr.mongodb.net/?retryWrites=true&w=majority")
+  .connect(process.env.MONGO)
   .then(() => {
   console.log('MongoDB Connected');
 })
