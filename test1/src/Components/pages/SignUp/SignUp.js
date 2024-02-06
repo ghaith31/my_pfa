@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import imag1 from './imag1.jpg';
+
+
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
@@ -13,24 +14,31 @@ export default function SignUp() {
       [e.target.id]: e.target.value,
     });
   };
+    
   const handleSubmit = async (e) => {
+    
     e.preventDefault();
     try {
+      
       setLoading(true);
-      const res = await fetch('/api/auth/signup', {
+      const res = await fetch('http://localhost:7003/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
+      console.log('serveur :', res);
+
       const data = await res.json();
-      console.log(data);
+     
+      
       if (data.success === false) {
         setLoading(false);
-        setError(data.message);
+        setError(data.message || 'creation failure');
         return;
       }
+      
       setLoading(false);
       setError(null);
       navigate('/SignIn');
@@ -41,7 +49,8 @@ export default function SignUp() {
   };
   return (
     <div className='p-3 max-w-lg mx-auto mr-4'>
-      <h1 className=' text-white  text-3xl text-center font-semibold my-7'>Sign Up</h1>
+      <br /><br /><br /><br /><br /><br /><br />
+
       <form onSubmit={handleSubmit} className='flex flex-col gap-10'>
         <input
           type='text'
@@ -67,23 +76,19 @@ export default function SignUp() {
 
         <button
           disabled={loading}
-          className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
+          className='bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
         >
           {loading ? 'Loading...' : 'Sign Up'}
         </button>
       </form>
       <div className='flex gap-2 mt-5'>
-        <p className='text-white '>Have an account?</p>
+        <p className='text-white'>Have an account?</p>
         <Link to={'/SignIn'}>
-          <span className='text-blue-700'>Sign in</span>
+          <span className='text-blue-500'>Sign in</span>
         </Link>
       </div>
       {error && <p className='text-red-500 mt-5'>{error}</p>}
     </div>
-
-
-
-    
     
   );
 }
