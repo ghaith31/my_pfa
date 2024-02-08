@@ -2,10 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+/*body {
     background-image: url('./images/imag3.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
+}*/
+
+body{
+    background-color: rgb(241, 245, 241);
 }
 

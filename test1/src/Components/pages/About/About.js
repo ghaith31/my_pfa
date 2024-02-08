@@ -1,5 +1,5 @@
 import React from 'react'
-import imag1 from './imag1.jpg';
+
 
 export default function About() {
   return (
@@ -12,9 +12,7 @@ export default function About() {
       Why Choose <mark>Holberton libery?</mark>
       </p>
     
-      <div>
-      <img src={imag1} style={{ maxWidth: '100%' }} />
-    </div>
+     
     
   <br/><hr/>
 
@@ -33,6 +31,7 @@ At Holbertonlibery, we believe in providing access to quality computer science e
 
       </p>
       </div>
+      
   )
 }
 
