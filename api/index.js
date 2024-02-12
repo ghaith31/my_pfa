@@ -6,6 +6,7 @@ import authRouter from './routes/auth.route.js';
 import cors from 'cors';
 
 
+
 dotenv.config();
 
 mongoose
@@ -21,6 +22,9 @@ const app = express();
 app.use(cors());
 const PORT = 7003;
 app.use(express.json());
+
+
+
 
 app.listen(PORT, () => {    
     console.log(`Server is running on port  ${PORT}`);
