@@ -1,5 +1,6 @@
 import User from "../models/user.models.js";
 import bcryptjs from 'bcryptjs';
+import { errorHandler } from "../utils/eroor.js";
 
 
 
@@ -38,5 +39,5 @@ export const test = (req, res) => {
       next(error);
     }
   };
-  
 
+  
