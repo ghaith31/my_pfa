@@ -35,7 +35,7 @@ export default function OAuth2() {
     }
   };
   return (
-    <Button type='button' color="dark" pill outline onClick={handleGoogleClick}>
+    <Button type='button' color="dark" outline onClick={handleGoogleClick}>
           <AiFillGithub className='w-6 h-6 mr-2'/>
           Continue with github
       </Button>
