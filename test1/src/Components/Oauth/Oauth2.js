@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { signInSuccess } from '/home/ghaith/Bureau/my_pfa/test1/src/redux/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { app } from '../../firebase';
+import { Button } from 'flowbite-react';
+import { AiFillGithub } from 'react-icons/ai';
 
 export default function OAuth2() {
   const dispatch = useDispatch();
@@ -33,12 +35,9 @@ export default function OAuth2() {
     }
   };
   return (
-    <button
-      onClick={handleGoogleClick}
-      type='button'
-      className='bg-black text-white p-2 rounded-lg uppercase hover:opacity-200 text-lg'
-    >
-      <b>Continue with GitHub</b>
-    </button>
+    <Button type='button' color="dark" pill outline onClick={handleGoogleClick}>
+          <AiFillGithub className='w-6 h-6 mr-2'/>
+          Continue with github
+      </Button>
   );
 }
