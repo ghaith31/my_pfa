@@ -5,19 +5,21 @@ import {
   getStorage,
   ref,
   uploadBytesResumable,
+  getItem,
 } from 'firebase/storage';
-import { Link } from 'react-router-dom';
+
 import { app } from '../../../firebase';
 import {
   updateUserStart,
   updateUserSuccess,
   updateUserFailure,
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
 } from '/home/ghaith/Bureau/my_pfa/test1/src/redux/user/userSlice.js';
 import { useDispatch } from 'react-redux';
-import cors from 'cors';
+ 
 
-
-app.use(cors());
 
 export default function Profile() {
   const fileRef = useRef(null);
@@ -71,10 +73,12 @@ console.log("1");
     e.preventDefault();
     try {
       dispatch(updateUserStart());
+      const token = sessionStorage.getItem('token');
       const res = await fetch(`http://localhost:7003/api/user/update/${currentUser._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formData),
       });
@@ -89,7 +93,26 @@ console.log("1");
     } catch (error) {
       dispatch(updateUserFailure(error.message));
     }
-  };console.log("2");
+  };
+
+  const handleDeleteUser = async () => {
+    try {
+      dispatch(deleteUserStart());
+      
+      const res = await fetch(`http://localhost:7003/api/user/delete/${currentUser._id}`, {
+        method: 'DELETE',
+        
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+    }
+  };
   return (
   <div className='p-3 max-w-lg mx-auto'>
     <h1 className='text-5xl font-semibold text-center '>settings</h1>
@@ -153,7 +176,12 @@ console.log("1");
         </button>
       </form>
       <div className='flex justify-between mt-5'>
-        <span className='text-red-700 cursor-pointer'>Delete account</span>
+      <span
+          onClick={handleDeleteUser}
+          className='text-red-700 cursor-pointer'
+        >
+          Delete account
+        </span>
         <span className='text-red-700 cursor-pointer'>Sign out</span>
       </div>
 
