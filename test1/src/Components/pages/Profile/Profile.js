@@ -16,8 +16,10 @@ import {
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
+  signOutUserStart,
 } from '/home/ghaith/Bureau/my_pfa/test1/src/redux/user/userSlice.js';
 import { useDispatch } from 'react-redux';
+import { Button } from 'flowbite-react';
  
 
 
@@ -113,9 +115,27 @@ console.log("1");
       dispatch(deleteUserFailure(error.message));
     }
   };
+
+  const handleSignOut = async () => {
+
+    try {
+      dispatch(signOutUserStart())
+      const res = await fetch('http://localhost:7003/api/auth/signout');
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+        
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      //dispatch(deleteUserFailure(data.message));//moufid khdmet (tw nrj3lehaaaaa)
+    }
+  }
+
   return (
   <div className='p-3 max-w-lg mx-auto'>
-    <h1 className='text-5xl font-semibold text-center '>settings</h1>
+    
     <form onSubmit={handleSubmit} className='flex flex-col gap-3'>
       <input
         onChange={(e) => setFile(e.target.files[0])}
@@ -130,7 +150,7 @@ console.log("1");
         alt='profile'
         className='rounded-full h-76 w-76 object-cover cursor-pointer self-center mt-7'
       />
- console.log("3");     
+    
       <p className='text-sm self-center'>
         {fileUploadError ? (
           <span className='text-red-700'>
@@ -170,19 +190,23 @@ console.log("1");
         />
         <button
           disabled={loading}
-          className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'
+          className='bg-slate-700 text-white rounded-lg p-2 uppercase hover:opacity-95 disabled:opacity-80'
         >
           {loading ? 'Loading...' : 'Update'}
         </button>
       </form>
       <div className='flex justify-between mt-5'>
+      <Button gradientMonochrome="failure">
       <span
           onClick={handleDeleteUser}
-          className='text-red-700 cursor-pointer'
+          className='text-white cursor-pointer'
         >
           Delete account
         </span>
-        <span className='text-red-700 cursor-pointer'>Sign out</span>
+        </Button>
+        <Button gradientMonochrome="failure">
+        <span onClick={handleSignOut} className='text-white cursor-pointer'>Sign out</span>
+        </Button>
       </div>
 
       <p className='text-red-700 mt-5'>{error ? error : ''}</p>
