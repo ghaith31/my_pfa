@@ -53,7 +53,11 @@ export default function Signin() {
     <div className='p-3 max-w-lg mx-auto '>
       <br /><br /><br />
 
-    
+      
+
+
+
+      
       
         <div className='flex-1'>
           <Link to='/' className='font-bold dark:text-white text-4xl'>
@@ -71,16 +75,29 @@ export default function Signin() {
         <br /><br />
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-      <Label  value='Your email' />
+      <Label className="text-lg" value='Your email' />
         <input
           type='email'
-          placeholder=' name@holbertonstudents.com'
+          placeholder='@holbertonstudents.com'
           className='border p-3 rounded-lg'
           id='email'
           onChange={handleChange}
         />
-        <Label  value='Your password' />
+        <Label className="text-lg" value='Your password' />
         <input
           type='password'
           placeholder='**********'
@@ -91,7 +108,7 @@ export default function Signin() {
         />
 
               <Button
-              gradientMonochrome="failure"
+              gradientDuoTone='purpleToBlue'
               type='submit'
               disabled={loading}>
               {loading ? (

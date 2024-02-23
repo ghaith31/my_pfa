@@ -5,9 +5,7 @@ import {
   getStorage,
   ref,
   uploadBytesResumable,
-  getItem,
 } from 'firebase/storage';
-
 import { app } from '../../../firebase';
 import {
   updateUserStart,
@@ -20,7 +18,7 @@ import {
 } from '/home/ghaith/Bureau/my_pfa/test1/src/redux/user/userSlice.js';
 import { useDispatch } from 'react-redux';
 import { Button } from 'flowbite-react';
- 
+import { Link } from 'react-router-dom';
 
 
 export default function Profile() {
@@ -36,6 +34,7 @@ export default function Profile() {
   useEffect(() => {
     if (file) {
       handleFileUpload(file);
+      
     }
   }, [file]);
 
@@ -46,7 +45,7 @@ export default function Profile() {
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     uploadTask.on(
-      'state_changed',
+      'holberton_upload',
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -75,12 +74,12 @@ console.log("1");
     e.preventDefault();
     try {
       dispatch(updateUserStart());
-      const token = sessionStorage.getItem('token');
-      const res = await fetch(`http://localhost:7003/api/user/update/${currentUser._id}`, {
+      
+      const res = await fetch(`http://localhost/api/user/update/${currentUser._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+        
         },
         body: JSON.stringify(formData),
       });
@@ -188,12 +187,17 @@ console.log("1");
           id='password'
           className='border p-3 rounded-lg'
         />
-        <button
+        <Button
           disabled={loading}
-          className='bg-slate-700 text-white rounded-lg p-2 uppercase hover:opacity-95 disabled:opacity-80'
+           color="success" pill
         >
           {loading ? 'Loading...' : 'Update'}
-        </button>
+        </Button>
+        <Button color="blue" pill>
+        <Link className=' p-2 rounded-lg uppercase text-center hover:opacity-95' to={"/create-listing"}>
+          Create Listing
+        </Link>
+        </Button>
       </form>
       <div className='flex justify-between mt-5'>
       <Button gradientMonochrome="failure">

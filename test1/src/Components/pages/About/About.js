@@ -5,6 +5,7 @@ export default function About() {
   return (
     <div>
       <div className='py-20 px-4 max-w-6xl mx-auto'>
+      <h4 className='px-2 py-1 bg-gradient-to-r from-red-900 via-red-700 via-red-400 to-red-100 rounded-lg text-white'> holberton library</h4>
         <Accordion collapseAll>
           <Accordion.Panel>
             <Accordion.Title>
@@ -65,6 +66,7 @@ export default function About() {
       
 
       <div className='py-20 px-4 max-w-6xl mx-auto'>
+      <h1 className='px-2 py-1 bg-gradient-to-r from-blue-900 via-blue-700 via-blue-400 to-blue-100 rounded-lg text-white'> holberton Search engine</h1>
         <Accordion collapseAll>
           <Accordion.Panel>
             <Accordion.Title>
