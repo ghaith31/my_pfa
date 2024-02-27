@@ -2,6 +2,7 @@ import User from "../models/user.models.js";
 import bcryptjs from 'bcryptjs';
 import { errorHandler } from "../utils/eroor.js";
 
+
 export const test = (req, res) => {
     res.json({
       message: 'Api route ykhdemm!',

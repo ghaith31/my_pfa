@@ -75,7 +75,7 @@ console.log("1");
     try {
       dispatch(updateUserStart());
       
-      const res = await fetch(`http://localhost/api/user/update/${currentUser._id}`, {
+      const res = await fetch(`http://localhost:7003/api/user/update/${currentUser._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -133,7 +133,8 @@ console.log("1");
   }
 
   return (
-  <div className='p-3 max-w-lg mx-auto'>
+    <div className='p-3 max-w-lg ml-auto'>
+
     
     <form onSubmit={handleSubmit} className='flex flex-col gap-3'>
       <input
@@ -187,12 +188,12 @@ console.log("1");
           id='password'
           className='border p-3 rounded-lg'
         />
-        <Button
+        <button
           disabled={loading}
-           color="success" pill
+          className='p-3 bg-green-700 text-white rounded-lg rounded-9 uppercase hover:opacity-95 disabled:opacity-80 italic'
         >
           {loading ? 'Loading...' : 'Update'}
-        </Button>
+        </button>
         <Button color="blue" pill>
         <Link className=' p-2 rounded-lg uppercase text-center hover:opacity-95' to={"/create-listing"}>
           Create Listing

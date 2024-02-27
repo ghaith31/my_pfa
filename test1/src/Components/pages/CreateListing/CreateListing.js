@@ -12,19 +12,33 @@ import { Button, FileInput } from 'flowbite-react';
 import { HiOutlineArrowRight} from 'react-icons/hi';
 import { HiInformationCircle } from 'react-icons/hi';
 import { Alert } from 'flowbite-react';
-
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 
 
 export default function CreateListing() {
+  const { currentUser } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const [files, setFiles] = useState([]); 
   const [formData, setFormData] = useState({
     pdfUrls: [], 
     imageUrls: [], 
+    name: '',
+    description: '',
+    first_year: false,
+    second_year: false,
+    others: false,
+    web_development: false,
+    cyber_security: false,
+    Low_level: false,
+    machine_learning: false,
+    AR_VR: false,
   });
   const [uploadError, setUploadError] = useState(false); 
   const [uploading, setUploading] = useState(false); 
-
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const handleFileSubmit = (e) => { 
     if (files.length > 0 && files.length + formData.pdfUrls.length < 7) {
       setUploading(true);
@@ -85,6 +99,68 @@ export default function CreateListing() {
       pdfUrls: formData.pdfUrls.filter((_, i) => i !== index),
     });
   };
+  const handleChange = (e) => {
+    
+    
+
+    if (
+      e.target.id === 'others' ||
+      e.target.id === 'web_development' ||
+      e.target.id === 'first_year' ||
+      e.target.id === 'second_year' ||
+      e.target.id === 'cyber_security' ||
+      e.target.id === 'AR_VR' ||
+      e.target.id === 'machine_learning' ||
+      e.target.id === 'Low_level'
+    ) {
+      setFormData({
+        ...formData,
+        [e.target.id]: e.target.checked,
+      });
+    }
+
+    if (
+      e.target.type === 'number' ||
+      e.target.type === 'text' ||
+      e.target.type === 'textarea'
+      
+    ) {
+      setFormData({
+        ...formData,
+        [e.target.id]: e.target.value,
+      });
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (!formData.imageUrls || formData.pdfUrls.length < 1)
+      return setError('You must upload at least one file');
+      setLoading(true);
+      setError(false);
+
+      const res = await fetch('http://localhost:7003/api/listing/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          userRef: currentUser._id,
+        }),
+      });
+      const data = await res.json();
+      setLoading(false);
+      if (data.success === false) {
+        setError(data.message);
+      }
+      navigate(`/listing/${data._id}`);
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
 
   return (
     <main className='p-3 max-w-4xl mx-auto'>
@@ -94,7 +170,7 @@ export default function CreateListing() {
       Create a document
       </h1>
       <br /><br />
-      <form className='flex flex-col sm:flex-row gap-4'>
+      <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4'>
         <div className='flex flex-col gap-4 flex-1'>
           <input
             type='text'
@@ -104,6 +180,8 @@ export default function CreateListing() {
             maxLength='62'
             minLength='10'
             required
+            onChange={handleChange}
+            value={formData.name}
           />
           <textarea
             type='text'
@@ -111,41 +189,65 @@ export default function CreateListing() {
             className='border p-3 rounded-lg'
             id='description'
             required
+            onChange={handleChange}
+            value={formData.description}
           />
           <div className='flex gap-6 flex-wrap'>
             <div className='flex gap-2'>
-              <input type='checkbox' id='sale' className='w-5' />
+              <input type='checkbox' id='first_year' className='w-5'
+              onChange={handleChange}
+                checked={formData.first_year} />
               <span>first year</span>
             </div>
             <div className='flex gap-2'>
-              <input type='checkbox' id='rent' className='w-5' />
+              <input
+               type='checkbox'
+               id='second_year'
+               className='w-5'
+               onChange={handleChange}
+                checked={formData.second_year}
+                />
               <span>second year</span>
             </div>
             
           </div>
           <div className='flex flex-wrap gap-6'>
           <div className='flex gap-2'>
-              <input type='checkbox' id='web_development' className='w-5' />
+              <input type='checkbox' id='web_development' className='w-5'
+              onChange={handleChange}
+                checked={formData.web_development} />
               <span>web development</span>
             </div>
             <div className='flex gap-2'>
-              <input type='checkbox' id='cyber_security' className='w-5' />
+              <input type='checkbox' id='cyber_security' className='w-5'
+              onChange={handleChange}
+                checked={formData.cyber_security} />
               <span>cyber security</span>
             </div>
             <div className='flex gap-2'>
-              <input type='checkbox' id='AR_VR' className='w-5' />
+              <input type='checkbox' id='AR_VR' className='w-5'
+              onChange={handleChange}
+                checked={formData.AR_VR} />
               <span>AR/VR</span>
             </div>
             <div className='flex gap-2'>
-              <input type='checkbox' id='machine_learning' className='w-5' />
+              <input type='checkbox' id='machine_learning' className='w-5' 
+                onChange={handleChange}
+                checked={formData.machine_learning}
+              />
               <span>machine learning</span>
             </div>
             <div className='flex gap-2'>
-              <input type='checkbox' id='Low_level' className='w-5' />
+              <input type='checkbox' id='Low_level' className='w-5' 
+                onChange={handleChange}
+                checked={formData.Low_level}
+              />
               <span>Low level</span>
             </div>
             <div className='flex gap-2'>
-              <input type='checkbox' id='others' className='w-5' />
+              <input type='checkbox' id='others' className='w-5'
+              onChange={handleChange}
+                checked={formData.others} />
               <span>others</span>
             </div>
           </div>
@@ -191,10 +293,18 @@ export default function CreateListing() {
       </Button>
     </div>
             ))}
-          <Button>
-            Create document
-            <HiOutlineArrowRight className="ml-2 h-5 w-5" />
-          </Button>
+          
+          <button
+            disabled={loading || uploading}
+            className='p-5 bg-blue-700 text-white rounded-lg rounded-9 uppercase hover:opacity-95 disabled:opacity-80 italic'
+
+
+          >
+          
+            {loading ? 'Creating...' : 'Create document'}
+            
+          </button>
+          {error && <p className='text-red-700 text-sm'>{error}</p>}
         </div>
       </form>
     </main>

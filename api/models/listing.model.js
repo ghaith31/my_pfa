@@ -19,14 +19,22 @@ const listingSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
+    first_year: {
+      type: Boolean,
+      required: true,
+    },
+    second_year: {
+      type: Boolean,
+      required: true,
+    },
     cyber_security: {
       type: Boolean,
       required: true,
     },
-    type: {
-      type: String,
-      required: true,
-    },
+    //type: {                          type: bdlet raya haha
+      //type: String,
+      //required: true,
+    //},
     AR_VR: {
       type: Boolean,
       required: true,
@@ -35,7 +43,7 @@ const listingSchema = new mongoose.Schema(
         type: Boolean,
         required: true,
       },
-      Low_level: {
+      Low_level : {
         type: Boolean,
         required: true,
       },
