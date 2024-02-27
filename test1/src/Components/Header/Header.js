@@ -44,7 +44,7 @@ function Header() {
         <AiOutlineSearch className='text-slate-500' />
     </form>
     <Button.Group>
-    <ul className='flex gap-4'>
+    <ul className='flex gap-6'>
     <Button color="gray">
         <Link to='/'>
         
@@ -59,7 +59,7 @@ function Header() {
         </Link>
         </Button>
          <Button color="gray">
-         <HiUserCircle className="mr-5 h-8 w-8" />
+         <HiUserCircle className="mr-5 h-5 w-8" />
         <Link to='/profile'>
             {currentUser ? (
               <img
