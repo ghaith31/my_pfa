@@ -12,6 +12,8 @@ import CreateListing from './Components/pages/CreateListing/CreateListing';
 import Dashboard from './Components/pages/Dashboard/ShowListings';
 import ShowListings from './Components/pages/Dashboard/ShowListings';
 import UpdateListing from './Components/pages/UpdateListing/UpdateListing';
+import Listing from './Components/pages/LIsting/Listing';
+
 function App() {
   return (
     
@@ -32,7 +34,7 @@ function App() {
             element={<UpdateListing />}
           />
     </Route>
-    
+    <Route path='/listing/:listingId' element={<Listing />} />
     </Routes>
     </BrowserRouter>
     
