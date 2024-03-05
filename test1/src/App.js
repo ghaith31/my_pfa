@@ -11,6 +11,7 @@ import PrivateRoute from './Components/PrivateRoute';
 import CreateListing from './Components/pages/CreateListing/CreateListing';
 import Dashboard from './Components/pages/Dashboard/ShowListings';
 import ShowListings from './Components/pages/Dashboard/ShowListings';
+import UpdateListing from './Components/pages/UpdateListing/UpdateListing';
 function App() {
   return (
     
@@ -26,6 +27,10 @@ function App() {
         <Route path='/create-listing' element={<CreateListing />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path = '/ShowListings' element = {<ShowListings/>} />
+        <Route
+            path='/update-listing/:listingId'
+            element={<UpdateListing />}
+          />
     </Route>
     
     </Routes>
