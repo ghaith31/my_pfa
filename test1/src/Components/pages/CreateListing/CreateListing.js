@@ -187,7 +187,7 @@ export default function CreateListing() {
           <textarea
             type='text'
             placeholder='Description'
-            className='border p-3 rounded-lg'
+            className='border p-3 rounded-lg' 
             id='description'
             required
             onChange={handleChange}
