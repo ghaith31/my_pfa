@@ -84,7 +84,7 @@ console.log("1");
     try {
       dispatch(updateUserStart());
       
-      const res = await fetch(`http://localhost:7003/api/user/update/${currentUser._id}`, {
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -111,10 +111,10 @@ console.log("1");
      
       dispatch(deleteUserStart());
       
-      const res = await fetch(`http://localhost:7003/api/user/delete/${currentUser._id}`, {
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
         method: 'DELETE',
         //'credentials': 'include',
-        //'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
         
         //'Authorization': `Bearer ${token}`
         

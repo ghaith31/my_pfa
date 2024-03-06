@@ -4,7 +4,8 @@ import { errorHandler } from './eroor.js';
 
 export const verifyToken = (req, res, next) => {
 
-    const token = req.headers.authorization;
+    const token = req.headers.cookie.split('token=')[1];
+    console.log(token);
 
     if (!token) return next(errorHandler(401, 'Unauthorized'));
 

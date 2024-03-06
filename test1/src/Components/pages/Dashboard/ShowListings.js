@@ -19,7 +19,7 @@ function ShowListings() {
             setShowListingsError(true);
             return;
           }
-    
+
           setUserListings(data);
         } catch (error) {
           setShowListingsError(true);
@@ -27,7 +27,7 @@ function ShowListings() {
       };
       const handleListingDelete = async (listingId) => {
         try {
-          const res = await fetch(`http://localhost:7003/api/listing/delete/${listingId}`, {
+          const res = await fetch(`/api/listing/delete/${listingId}`, {
             method: 'DELETE',
           });
           const data = await res.json();
@@ -75,7 +75,7 @@ function ShowListings() {
               <Link to={`/listing/${listing._id}`}>
                 <img
                   src={listing.imageUrls[0]}
-                  alt='listing cover'
+                  alt='document cover'
                   className='h-16 w-16 object-contain' />
               </Link>
               <Link

@@ -140,7 +140,7 @@ export default function CreateListing() {
       setLoading(true);
       setError(false);
 
-      const res = await fetch('http://localhost:7003/api/listing/create', {
+      const res = await fetch('/api/listing/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
