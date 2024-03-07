@@ -11,12 +11,13 @@ import { deleteUserFailure,
     signOutUserStart, } from '../redux/user/userSlice';
 
 export default function DashSidebar() {
-  const [showListingsError, setShowdocumentsError] = useState(false);
+  //const [userListings, setUserListings] = useState([]);
+  const [showListingsError, setShowListingsError] = useState(false);
   const location = useLocation();
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const [tab, setTab] = useState('');
-  const [userListings, setUserdocuments] = useState([]);
+  const [userListings, setUserdocuments,setUserListings] = useState([]);
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const tabFromUrl = urlParams.get('tab');
@@ -66,9 +67,25 @@ export default function DashSidebar() {
       dispatch(deleteUserFailure(error.message));
     }
   };
+  const handleShowListings = async () => {
+    try {
+      setShowListingsError(false);
+      const res = await fetch(`http://localhost:7003/api/user/listings/${currentUser._id}`);
+      const data = await res.json();
+      if (data.success === false) {
+        setShowListingsError(true);
+        return;
+      }
+
+      setUserListings(data);
+    } catch (error) {
+      setShowListingsError(true);
+    }
+  };
     
   
   return (
+    <div className='mx-69'>
     <Sidebar className='w-full md:w-56'>
 
       <Sidebar.Items>
@@ -97,8 +114,8 @@ export default function DashSidebar() {
           <Sidebar.Item
             icon={HiArrowSmRight}
             className='cursor-pointer'
-            
-          >
+            onClick={handleShowListings}
+          >                                        
             Show my documents
 
           </Sidebar.Item>
@@ -122,5 +139,6 @@ export default function DashSidebar() {
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>
+    </div>
   );
 }

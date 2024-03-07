@@ -9,15 +9,17 @@ import Profile from './Components/pages/Profile/Profile';
 import Header from './Components/Header/Header';
 import PrivateRoute from './Components/PrivateRoute';
 import CreateListing from './Components/pages/CreateListing/CreateListing';
-import Dashboard from './Components/pages/Dashboard/ShowListings';
-import ShowListings from './Components/pages/Dashboard/ShowListings';
+import Dashboard from './Components/pages/showlisting/ShowListings';
+import ShowListings from './Components/pages/showlisting/ShowListings';
 import UpdateListing from './Components/pages/UpdateListing/UpdateListing';
 import Listing from './Components/pages/LIsting/Listing';
+
 
 function App() {
   return (
     
     <BrowserRouter >
+    
     <Header/>
     <Routes>
     <Route path = "/" element = {<Home/>} />

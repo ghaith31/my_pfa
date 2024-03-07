@@ -140,7 +140,7 @@ export default function CreateListing() {
       setLoading(true);
       setError(false);
 
-      const res = await fetch('/api/listing/create', {
+      const res = await fetch('http://localhost:7003/api/listing/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -163,151 +163,148 @@ export default function CreateListing() {
   };
 
   return (
-    
+    <>
+    <div className="flex">
+    <div>
+      <Dashboard className="w-1/6" />
+    </div>
     <main className='p-3 max-w-4xl mx-auto'>
-
-    <br /><br /><br />
+      <br /><br /><br />
       <h1 className='px-2 py-1 bg-gradient-to-r from-red-800 via-red-600 via-red-400 to-red-100 rounded-lg text-white text-3xl font-semibold text-center my-7'>
-      Create a document
+        Create a document
       </h1>
       <br /><br />
       <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4'>
-        <div className='flex flex-col gap-4 flex-1'>
-          <input
-            type='text'
-            placeholder='Name'
-            className='border p-3 rounded-lg'
-            id='name'
-            maxLength='62'
-            minLength='10'
-            required
-            onChange={handleChange}
-            value={formData.name}
-          />
-          <textarea
-            type='text'
-            placeholder='Description'
-            className='border p-3 rounded-lg' 
-            id='description'
-            required
-            onChange={handleChange}
-            value={formData.description}
-          />
-          <div className='flex gap-6 flex-wrap'>
-            <div className='flex gap-2'>
-              <input type='checkbox' id='first_year' className='w-5'
+          <div className='flex flex-col gap-4 flex-1'>
+            <input
+              type='text'
+              placeholder='Name'
+              className='border p-3 rounded-lg'
+              id='name'
+              maxLength='62'
+              minLength='10'
+              required
               onChange={handleChange}
-                checked={formData.first_year} />
-              <span>first year</span>
-            </div>
-            <div className='flex gap-2'>
-              <input
-               type='checkbox'
-               id='second_year'
-               className='w-5'
-               onChange={handleChange}
-                checked={formData.second_year}
-                />
-              <span>second year</span>
-            </div>
-            
-          </div>
-          <div className='flex flex-wrap gap-6'>
-          <div className='flex gap-2'>
-              <input type='checkbox' id='web_development' className='w-5'
+              value={formData.name} />
+            <textarea
+              type='text'
+              placeholder='Description'
+              className='border p-3 rounded-lg'
+              id='description'
+              required
               onChange={handleChange}
-                checked={formData.web_development} />
-              <span>web development</span>
+              value={formData.description} />
+            <div className='flex gap-6 flex-wrap'>
+              <div className='flex gap-2'>
+                <input type='checkbox' id='first_year' className='w-5'
+                  onChange={handleChange}
+                  checked={formData.first_year} />
+                <span>first year</span>
+              </div>
+              <div className='flex gap-2'>
+                <input
+                  type='checkbox'
+                  id='second_year'
+                  className='w-5'
+                  onChange={handleChange}
+                  checked={formData.second_year} />
+                <span>second year</span>
+              </div>
+
             </div>
-            <div className='flex gap-2'>
-              <input type='checkbox' id='cyber_security' className='w-5'
-              onChange={handleChange}
-                checked={formData.cyber_security} />
-              <span>cyber security</span>
-            </div>
-            <div className='flex gap-2'>
-              <input type='checkbox' id='AR_VR' className='w-5'
-              onChange={handleChange}
-                checked={formData.AR_VR} />
-              <span>AR/VR</span>
-            </div>
-            <div className='flex gap-2'>
-              <input type='checkbox' id='machine_learning' className='w-5' 
-                onChange={handleChange}
-                checked={formData.machine_learning}
-              />
-              <span>machine learning</span>
-            </div>
-            <div className='flex gap-2'>
-              <input type='checkbox' id='Low_level' className='w-5' 
-                onChange={handleChange}
-                checked={formData.Low_level}
-              />
-              <span>Low level</span>
-            </div>
-            <div className='flex gap-2'>
-              <input type='checkbox' id='others' className='w-5'
-              onChange={handleChange}
-                checked={formData.others} />
-              <span>others</span>
+            <div className='flex flex-wrap gap-6'>
+              <div className='flex gap-2'>
+                <input type='checkbox' id='web_development' className='w-5'
+                  onChange={handleChange}
+                  checked={formData.web_development} />
+                <span>web development</span>
+              </div>
+              <div className='flex gap-2'>
+                <input type='checkbox' id='cyber_security' className='w-5'
+                  onChange={handleChange}
+                  checked={formData.cyber_security} />
+                <span>cyber security</span>
+              </div>
+              <div className='flex gap-2'>
+                <input type='checkbox' id='AR_VR' className='w-5'
+                  onChange={handleChange}
+                  checked={formData.AR_VR} />
+                <span>AR/VR</span>
+              </div>
+              <div className='flex gap-2'>
+                <input type='checkbox' id='machine_learning' className='w-5'
+                  onChange={handleChange}
+                  checked={formData.machine_learning} />
+                <span>machine learning</span>
+              </div>
+              <div className='flex gap-2'>
+                <input type='checkbox' id='Low_level' className='w-5'
+                  onChange={handleChange}
+                  checked={formData.Low_level} />
+                <span>Low level</span>
+              </div>
+              <div className='flex gap-2'>
+                <input type='checkbox' id='others' className='w-5'
+                  onChange={handleChange}
+                  checked={formData.others} />
+                <span>others</span>
+              </div>
             </div>
           </div>
-        </div>
-        
-        <div className='flex flex-col flex-1 gap-4'>
-        <Alert color="success" icon={HiInformationCircle}>
-      <span className="font-medium">Info:</span><br/>-You can only upload up to 6 files<br/>
-      -10go max for file upload
-    </Alert>
-          <div className='flex gap-4'>
-          <FileInput
-              onChange={(e) => setFiles(e.target.files)}
-              className='p-3  border-gray-300 rounded w-full'
-              type='file'
-              id='files'
-              accept='image/*, .pdf'
-              multiple
-            />
-            <Button
-              color="success" pill
-              type='button'
-              disabled={uploading}
-              onClick={handleFileSubmit}
-              
+
+          <div className='flex flex-col flex-1 gap-4'>
+            <Alert color="success" icon={HiInformationCircle}>
+              <span className="font-medium">Info:</span><br />-You can only upload up to 6 files<br />
+              -10go max for file upload
+            </Alert>
+            <div className='flex gap-4'>
+              <FileInput
+                onChange={(e) => setFiles(e.target.files)}
+                className='p-3  border-gray-300 rounded w-full'
+                type='file'
+                id='files'
+                accept='image/*, .pdf'
+                multiple />
+              <Button
+                color="success" pill
+                type='button'
+                disabled={uploading}
+                onClick={handleFileSubmit}
+
+              >
+                {uploading ? 'Uploading...' : 'Upload'}
+              </Button>
+            </div>
+
+            <p className='text-red-700 text-sm'>
+              {setUploadError && setUploadError}
+            </p>
+            {formData.pdfUrls.length > 0 &&
+              formData.pdfUrls.map((url, index) => (
+                <div key={index} className='flex justify-between p-1  items-center'>
+                  <span>{`File ${index + 1}`}</span>
+                  <Button
+                    type='button'
+                    onClick={() => handleRemoveFile(index)}
+                    color="failure" pill>
+                    Delete
+                  </Button>
+                </div>
+              ))}
+
+            <button
+              disabled={loading || uploading}
+              className='p-5 bg-blue-700 text-white rounded-lg rounded-9 uppercase hover:opacity-95 disabled:opacity-80 italic'
+
+
             >
-              {uploading ? 'Uploading...' : 'Upload'}
-            </Button>
+
+              {loading ? 'Creating...' : 'Create document'}
+
+            </button>
+            {error && <p className='text-red-700 text-sm'>{error}</p>}
           </div>
-      
-          <p className='text-red-700 text-sm'>
-            {setUploadError && setUploadError}
-          </p>
-          {formData.pdfUrls.length > 0 &&
-  formData.pdfUrls.map((url, index) => (
-    <div key={index} className='flex justify-between p-1  items-center'>
-      <span>{`File ${index + 1}`}</span>
-      <Button
-        type='button'
-        onClick={() => handleRemoveFile(index)} 
-        color="failure" pill>
-        Delete
-      </Button>
-    </div>
-            ))}
-          
-          <button
-            disabled={loading || uploading}
-            className='p-5 bg-blue-700 text-white rounded-lg rounded-9 uppercase hover:opacity-95 disabled:opacity-80 italic'
-
-
-          >
-          
-            {loading ? 'Creating...' : 'Create document'}
-            
-          </button>
-          {error && <p className='text-red-700 text-sm'>{error}</p>}
-        </div>
-      </form>
-    </main>
+        </form>
+      </main></div></>
   );
 }

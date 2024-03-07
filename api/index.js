@@ -24,7 +24,7 @@ app.use(cors());
 const PORT = 7003;
 app.use(express.json());
 app.use(cookieParser());
-
+//app.use('/api/comment', commentRoutes);
 
 
 
