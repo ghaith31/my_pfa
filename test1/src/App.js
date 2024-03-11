@@ -13,7 +13,7 @@ import Dashboard from './Components/pages/showlisting/ShowListings';
 import ShowListings from './Components/pages/showlisting/ShowListings';
 import UpdateListing from './Components/pages/UpdateListing/UpdateListing';
 import Listing from './Components/pages/LIsting/Listing';
-
+import Search from './Components/pages/Search/Search';
 
 function App() {
   return (
@@ -26,6 +26,7 @@ function App() {
     <Route path = '/SignIn' element = {<SignIn/>} />
     <Route path = "/SignUp" element = {<SignUp/>} />
     <Route path = '/about' element = {<About/>} />
+    <Route path='/search' element={<Search />} />
     <Route element = {<PrivateRoute />}>
         <Route path = "/Profile" element = {<Profile/>} />
         <Route path='/create-listing' element={<CreateListing />} />
