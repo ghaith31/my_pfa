@@ -23,78 +23,34 @@ export default function Search() {
 
   const [loading, setLoading] = useState(false);
   const [listings, setListings] = useState([]);
-
+  const [showMore, setShowMore] = useState(false);
   const { search: locationSearch } = location;
   const urlParams = new URLSearchParams(locationSearch);
 
   useEffect(() => {
-    const searchTermFromUrl = urlParams.get('searchTerm');
-    const AR_VRFromUrl = urlParams.get('AR_VR');
-    const machine_learningFromUrl = urlParams.get('machine_learning');
-    const Low_levelFromUrl = urlParams.get('Low_level');
-    const cyber_securityFromUrl = urlParams.get('cyber_security');
-    const second_yearFromUrl = urlParams.get('second_year');
-    const first_yearFromUrl = urlParams.get('first_year');
-    const web_developmentFromUrl = urlParams.get('web_development');
-    const othersFromUrl = urlParams.get('others');
-    const sortFromUrl = urlParams.get('sort');
-    const orderFromUrl = urlParams.get('order');
-
-    if (
-      searchTermFromUrl ||
-      AR_VRFromUrl ||
-      machine_learningFromUrl ||
-      Low_levelFromUrl ||
-      cyber_securityFromUrl ||
-      second_yearFromUrl ||
-      first_yearFromUrl ||
-      web_developmentFromUrl ||
-      othersFromUrl ||
-      sortFromUrl ||
-      orderFromUrl
-    ) {
-      setSidebardata({
-        searchTerm: searchTermFromUrl || '',
-        AR_VR: AR_VRFromUrl === 'true',
-        machine_learning: machine_learningFromUrl === 'true',
-        Low_level: Low_levelFromUrl === 'true',
-        cyber_security: cyber_securityFromUrl === 'true',
-        second_year: second_yearFromUrl === 'true',
-        first_year: first_yearFromUrl === 'true',
-        web_development: web_developmentFromUrl === 'true',
-        others: othersFromUrl === 'true',
-        sort: sortFromUrl || 'created_at',
-        order: orderFromUrl || 'desc',
-      });
-    }
-
     const fetchListings = async () => {
       setLoading(true);
+      setShowMore(false);
       try {
-        const res = await fetch(`http://localhost:7003/api/listing/get?${locationSearch}`);
+        const res = await fetch(`http://localhost:7003/api/listing/get?${urlParams.toString()}`);
         const data = await res.json();
         setListings(data);
+        if (data.length > 8) {
+          setShowMore(true);
+        }
       } catch (error) {
         console.error('Error fetching listings:', error);
-        setListings([]);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchListings();
-  }, [locationSearch]);
-
+  }, [location.search]);
+  
   const handleChange = (e) => {
-    const { id, value, checked } = e.target;
-    if (id === 'AR_VR' ||
-      id === 'machine_learning' ||
-      id === 'Low_level' ||
-      id === 'cyber_security' ||
-      id === 'second_year' ||
-      id === 'first_year' ||
-      id === 'web_development' ||
-      id === 'others') {
+    const { id, checked, value } = e.target;
+    if (id === 'AR_VR' || id === 'machine_learning' || id === 'Low_level' || id === 'cyber_security' || id === 'second_year' || id === 'first_year' || id === 'web_development' || id === 'others') {
       setSidebardata({
         ...sidebardata,
         [id]: checked,
@@ -111,14 +67,14 @@ export default function Search() {
     e.preventDefault();
     const urlParams = new URLSearchParams();
     urlParams.set('searchTerm', sidebardata.searchTerm);
-    urlParams.set('AR_VR', sidebardata.AR_VR);
-    urlParams.set('machine_learning', sidebardata.machine_learning);
-    urlParams.set('Low_level', sidebardata.Low_level);
-    urlParams.set('cyber_security', sidebardata.cyber_security);
-    urlParams.set('second_year', sidebardata.second_year);
-    urlParams.set('first_year', sidebardata.first_year);
-    urlParams.set('web_development', sidebardata.web_development);
-    urlParams.set('others', sidebardata.others);
+    urlParams.set('AR_VR', sidebardata.AR_VR ? 'true' : 'false');
+    urlParams.set('machine_learning', sidebardata.machine_learning ? 'true' : 'false');
+    urlParams.set('Low_level', sidebardata.Low_level ? 'true' : 'false');
+    urlParams.set('cyber_security', sidebardata.cyber_security ? 'true' : 'false');
+    urlParams.set('second_year', sidebardata.second_year ? 'true' : 'false');
+    urlParams.set('first_year', sidebardata.first_year ? 'true' : 'false');
+    urlParams.set('web_development', sidebardata.web_development ? 'true' : 'false');
+    urlParams.set('others', sidebardata.others ? 'true' : 'false');
     urlParams.set('sort', sidebardata.sort);
     urlParams.set('order', sidebardata.order);
 
@@ -126,13 +82,29 @@ export default function Search() {
     navigate(`/search?${searchQuery}`);
   };
 
+  const onShowMoreClick = async () => {
+    const numberOfListings = listings.length;
+    const startIndex = numberOfListings;
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set('startIndex', startIndex);
+    try {
+      const res = await fetch(`http://localhost:7003/api/listing/get?${urlParams.toString()}`);
+      const data = await res.json();
+      if (data.length < 9) {
+        setShowMore(false);
+      }
+      setListings([...listings, ...data]);
+    } catch (error) {
+      console.error('Error fetching more listings:', error);
+    }
+  };
 
   return (
     <div className='flex flex-col md:flex-row'>
       <div className='p-4  border-b-2 md:border-r-2 md:min-h-screen'>
         <form onSubmit={handleSubmit} className='flex flex-col gap-3'>
           <div className='flex items-center gap-4'>
-            <label className='whitespace-nowrap font-semibold'><br />Search Term:</label>
+            <label className='whitespace-nowrap font-semibold'>Search Term:</label>
             <input
               type='text'
               id='searchTerm'
@@ -144,20 +116,24 @@ export default function Search() {
           </div>
           <br /><hr />
           <div>
+          <div>
             <div className='flex gap-2 items-center'>
               <Checkbox
                 onChange={handleChange}
                 checked={sidebardata.first_year}
                 id="first_year" />
-              <Label id='first_year' onChange={handleChange}
+              <Label id='first_year' 
+              onChange={handleChange}
                 checked={sidebardata.first_year} >
                 <span>first_year</span>
               </Label>
             </div>
             <div className='flex gap-2 items-center'>
-              <Checkbox id="second_year" onChange={handleChange}
+              <Checkbox id="second_year"
+               onChange={handleChange}
                 checked={sidebardata.second_year} />
-              <Label id='second_year' onChange={handleChange}
+              <Label id='second_year'
+               onChange={handleChange}
                 checked={sidebardata.second_year} >
                 <span>second_year</span>
               </Label>
@@ -212,15 +188,18 @@ export default function Search() {
             </div>
 
           </div>
+          </div>
           <br />
-          <Button outline gradientDuoTone="purpleToBlue">
+          <button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95' >
             <b>Search</b>
-          </Button>
+          </button>
         </form>
-
-
       </div>
-      <div >
+      <div>
+
+       <h1 className='text-3xl font-semibold border-b p-3 text-slate-700 mt-5'>
+          Listing results:
+        </h1>
         <div className='p-7 flex flex-wrap gap-4'>
           {!loading && listings.length === 0 && (
             <p className='text-xl text-slate-700'>No listing found!</p>
@@ -232,10 +211,19 @@ export default function Search() {
           )}
 
           {!loading &&
-            Array.isArray(listings) &&
+            listings &&
             listings.map((listing) => (
               <ListingItem key={listing._id} listing={listing} />
             ))}
+
+          {showMore && (
+            <button
+              onClick={onShowMoreClick}
+              className='text-green-700 hover:underline p-7 text-center w-full'
+            >
+              Show more
+            </button>
+          )}
         </div>
       </div>
     </div>

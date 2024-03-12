@@ -105,6 +105,12 @@ export const createListing = async (req, res, next) => {
         machine_learning = { $in: [false, true] };
       }
 
+      let AR_VR = req.query.AR_VR;
+  
+      if (AR_VR === undefined || AR_VR === 'false') {
+        AR_VR = { $in: [false, true] };
+      }
+
 
       let Low_level = req.query.Low_level;
   
@@ -116,19 +122,18 @@ export const createListing = async (req, res, next) => {
   
       const sort = req.query.sort || 'createdAt';
   
-      //const order = req.query.order || 'desc';
+      const order = req.query.order || 'desc';
   
       const listings = await Listing.find({
         name: { $regex: searchTerm, $options: 'i' },
-        AR_VR,
-        type,
-        Low_level,
-        machine_learning,
-        others,
-        cyber_security,
-        second_year,
-        first_year,
-        web_development,
+        AR_VR: AR_VR === 'true',
+        web_development: web_development === 'true',
+        first_year: first_year === 'true',
+        second_year: second_year === 'true',
+        cyber_security: cyber_security === 'true',
+        others: others === 'true',
+        machine_learning: machine_learning === 'true',
+        Low_level: Low_level === 'true'
       })
       .sort({ [sort]: order })
       .limit(limit)
