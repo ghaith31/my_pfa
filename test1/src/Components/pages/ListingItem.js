@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { MdLocationOn } from 'react-icons/md';
+import { FiCornerDownRight } from "react-icons/fi";
 
 export default function ListingItem({ listing }) {
   return (
@@ -18,7 +18,7 @@ export default function ListingItem({ listing }) {
             {listing.name}
           </p>
           <div className='flex items-center gap-1'>
-            <MdLocationOn className='h-4 w-4 text-green-700' />
+          <FiCornerDownRight className='h-4 w-4 text-green-700' />
           </div>
           <p className='text-sm text-gray-600 line-clamp-2'>
             {listing.description}

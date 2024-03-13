@@ -182,7 +182,7 @@ export default function CreateListing() {
               className='border p-3 rounded-lg'
               id='name'
               maxLength='62'
-              minLength='10'
+              minLength='2'
               required
               onChange={handleChange}
               value={formData.name} />
