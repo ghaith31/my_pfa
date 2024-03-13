@@ -15,7 +15,8 @@ import {
   deleteUserStart,
   deleteUserSuccess,
   signOutUserStart,
-} from '/home/ghaith/Bureau/my_pfa/test1/src/redux/user/userSlice.js';
+} from '../../../redux/user/userSlice.js';
+
 import { useDispatch } from 'react-redux';
 import { Button, Checkbox, Label, TextInput, Alert } from 'flowbite-react';
 import { Link } from 'react-router-dom';

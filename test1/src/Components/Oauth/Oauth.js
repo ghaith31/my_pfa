@@ -1,6 +1,6 @@
 import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
-import { signInSuccess } from '/home/ghaith/Bureau/my_pfa/test1/src/redux/user/userSlice';
+import { signInSuccess } from '../../redux/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { app } from '../../firebase';
 import { Button } from 'flowbite-react';
