@@ -1,7 +1,7 @@
 import User from '../models/user.models.js';
 import bcryptjs from 'bcryptjs';
 import  jwt  from 'jsonwebtoken';
-import { errorHandler } from '../utils/eroor.js';
+import { errorHandler } from '/home/ghaith/Bureau/my_pfa/api/utils/eroor.js';
 
  export const signup = async (req, res, next ) => {
     const {username, email, password } = req.body;

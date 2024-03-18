@@ -1,6 +1,6 @@
 import User from "../models/user.models.js";
 import bcryptjs from 'bcryptjs';
-import { errorHandler } from "../utils/eroor.js";
+import { errorHandler } from '/home/ghaith/Bureau/my_pfa/api/utils/eroor.js';
 import Listing from '../models/listing.model.js';
 
 export const test = (req, res) => {
